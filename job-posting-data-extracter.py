@@ -267,7 +267,10 @@ if __name__ == "__main__":
         count_writer = csv.writer(msa_count_new_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for msa in msa_job_count_map:
             city_data = msa_job_count_map[msa]
-            average_posting_close_time = (float(city_data[0])/float(city_data[1]))
+            if float(city_data[1]) > 0:
+                average_posting_close_time = (float(city_data[0])/float(city_data[1]))
+            else:
+                average_posting_close_time = 0
             count_writer.writerow([msa, round(average_posting_close_time, 2)])
 
 
