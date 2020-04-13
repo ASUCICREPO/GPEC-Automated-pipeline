@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import urllib.request
 import re
 import unidecode
+import json
+import pandas as pd
 
 cities = [
     "Phoenix",
@@ -58,5 +60,27 @@ def get_latest_data(cities, keys):
         data_dict[citi] = temp_dict
     
     return data_dict
-    
-print(get_latest_data(cities, keys))
+
+def convertDictToCsv(data_dict):
+    csvdict={}
+    csvdict['Cities']={}
+    Col_Name=[]
+    for col in list(data_dict[cities[0]].keys()):
+        csvdict[col]={}
+        i=0
+        for city in data_dict:
+            csvdict[col][str(i)]=data_dict[city][col]
+            i=i+1
+    i=0
+    for city in data_dict:
+        csvdict['Cities'][str(i)]=city
+        i=i+1
+    csvdict=json.dumps(csvdict)
+    df = pd.read_json (csvdict)
+    export_csv = df.to_csv (r'Test.csv', index = None, header=True)
+      
+
+    print(csvdict)
+
+
+convertDictToCsv(get_latest_data(cities, keys))
