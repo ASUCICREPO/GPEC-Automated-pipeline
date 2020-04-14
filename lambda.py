@@ -76,7 +76,7 @@ def convertDictToCsvAndUpload(data_dict):
         csvdict[col]={}
         i=0
         for city in data_dict:
-            csvdict[col][str(i)]=data_dict[city][col]
+            csvdict[col][str(i)]=float(data_dict[city][col].replace('$',''))
             i=i+1
     i=0
     for city in data_dict:
@@ -98,4 +98,4 @@ def convertDictToCsvAndUpload(data_dict):
     print('Uploaded')
 
 
-convertDictToCsv(get_latest_data(cities, keys))
+convertDictToCsvAndUpload(get_latest_data(cities, keys))
