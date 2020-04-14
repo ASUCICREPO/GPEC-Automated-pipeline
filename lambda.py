@@ -4,6 +4,8 @@ import re
 import unidecode
 import json
 import pandas as pd
+import boto3
+from botocore.exceptions import NoCredentialsError
 
 cities = [
     "Phoenix",
@@ -30,6 +32,10 @@ keys = [
     "Internet (60 Mbps or More, Unlimited Data, Cable/ADSL) "
     
 ]
+
+bucket_name= 'gpec-data'
+file_name='LocalCities.csv'
+key_name='AutomatedCities.csv'
 
 
 def get_latest_data(cities, keys):
@@ -61,7 +67,8 @@ def get_latest_data(cities, keys):
     
     return data_dict
 
-def convertDictToCsv(data_dict):
+def convertDictToCsvAndUpload(data_dict):
+    #Converting Dict to CSV
     csvdict={}
     csvdict['Cities']={}
     Col_Name=[]
@@ -77,10 +84,18 @@ def convertDictToCsv(data_dict):
         i=i+1
     csvdict=json.dumps(csvdict)
     df = pd.read_json (csvdict)
-    export_csv = df.to_csv (r'Test.csv', index = None, header=True)
-      
-
+    export_csv = df.to_csv (file_name, index = None, header=True)
     print(csvdict)
+    #Upload the CSV to Bucket
+    s3 = boto3.client('s3')
+    try:
+        s3.upload_file(file_name,bucket_name, key_name)
+    except botocore.exceptions.ClientError as e:
+        if e.response['Error']['Code'] == "404":
+            print("The object does not exist.")
+        else:
+            raise
+    print('Uploaded')
 
 
 convertDictToCsv(get_latest_data(cities, keys))
