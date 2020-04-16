@@ -1,0 +1,5 @@
+#pip install -r requirements.txt to install these  external dependencies for Lambda.py
+beautifulsoup4
+Unidecode
+pandas
+boto3
