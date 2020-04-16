@@ -1,0 +1,17 @@
+{
+    "fileLocations": [
+        {
+            "URIs": [
+                "s3://gpec-data/AutomatedCities.csv"
+            ]
+        }
+    ],
+    "globalUploadSettings": {
+        "format": "CSV",
+        "delimiter": ",",
+        "textqualifier": "\"",
+        "containsHeader": "true"
+    }
+}
+
+

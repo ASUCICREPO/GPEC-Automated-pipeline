@@ -76,16 +76,18 @@ def convertDictToCsvAndUpload(data_dict):
         csvdict[col]={}
         i=0
         for city in data_dict:
-            csvdict[col][str(i)]=float(data_dict[city][col].replace('$',''))
+            # print(data_dict[city][col])
+            # print(round(float(data_dict[city][col].replace('$','').strip()),2))
+            csvdict[col][str(i)]=round(float(data_dict[city][col].replace('$','')),2)
             i=i+1
     i=0
     for city in data_dict:
         csvdict['Cities'][str(i)]=city
         i=i+1
     csvdict=json.dumps(csvdict)
+
     df = pd.read_json (csvdict)
     export_csv = df.to_csv (file_name, index = None, header=True)
-    print(csvdict)
     #Upload the CSV to Bucket
     s3 = boto3.client('s3')
     try:
