@@ -3,15 +3,15 @@ Indeed.com data extracter:
 The code has been uploaded to GitHub: https://github.com/ASUCICREPO/GPEC-Automated-pipeline/blob/master/job-posting-data-extracter.py
 
 Architecture:
-——————
+————————————
 We tried to execute the file in lambda, but the execution time of the job has exceeded more than 15 minutes. We tried splitting the job into 2 parts, and each half took more than 15 minutes. Since 15 minutes is the time limit on Lambda, we decided to execute the file in an EC2 instance.
 
 Cron:
-———
+—————
 Everyday, the job executes at 4:30 AM GMT, i.e., 9:30 PM Arizona time. To see/change the schedule of the job, login to ec2 instance and press: ‘crontab -e’. It will display the time at which the job is executed. Edit the file to change the time to run.
 
 Job:
-——
+————
 S3: https://s3.console.aws.amazon.com/s3/buckets/jobs-data-extract/?region=us-east-1
 
 I’ve fetched all the jobs listed in the MSA regions and saved them in the file date_posted.csv. 
