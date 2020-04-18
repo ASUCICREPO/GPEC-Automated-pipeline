@@ -1,6 +1,6 @@
 Indeed.com data extracter:
 
-The code has been uploaded to GitHub here: https://github.com/ASUCICREPO/GPEC-Automated-pipeline/blob/master/job-posting-data-extracter.py
+The code has been uploaded to GitHub: https://github.com/ASUCICREPO/GPEC-Automated-pipeline/blob/master/job-posting-data-extracter.py
 
 Architecture:
 ——————
